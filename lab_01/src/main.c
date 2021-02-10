@@ -6,9 +6,7 @@
 
 int main(void)
 {
-    show_info();
-    
-    // пользовательский ввод
+    show_info(); // информация о программе
     FILE *file = get_file();    // получение файла с данными от пользователя
     mode_t mode = get_mode();    // получение вида интерполяции от пользователя
     int n = get_degree();    // получение степени полинома от пользователя
@@ -28,9 +26,10 @@ int main(void)
         return EXIT_FAILURE; // выходим, если не удалось выделить память
 
     sort(data, size, mode);
+    // находим начало конфигурации узлов в массиве
     size_t start_index = get_config(data, size, mode, x, n);
 
-    switch (mode)
+    switch (mode)   // интерполяция в зависимости от выбора пользователя
     {
         case NEWTON:
             y = interp_newton(data, x, start_index, n);
