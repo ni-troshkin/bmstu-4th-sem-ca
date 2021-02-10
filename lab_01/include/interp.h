@@ -25,6 +25,6 @@ size_t get_config(record_t *data, size_t size, mode_t mode, double x, int n);
 
 double interp_newton(record_t *data, double x, size_t start_index, int n);
 double interp_hermite(record_t *data, double x, size_t start_index, int n);
-double interp_inverse(record_t *data, double x, size_t start_index, int n);
+double interp_inverse(record_t *data, size_t size, double x, size_t start_index, int n);
 
 #endif  // __INTERP_H_

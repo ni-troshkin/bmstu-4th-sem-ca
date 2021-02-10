@@ -9,20 +9,23 @@ int main(void)
     show_info();
     
     // пользовательский ввод
-    FILE *file = get_file();    // получение файла с данными
-    mode_t mode = get_mode();    // получение вида интерполяции
-    int n = get_degree();    // получение степени полинома
+    FILE *file = get_file();    // получение файла с данными от пользователя
+    mode_t mode = get_mode();    // получение вида интерполяции от пользователя
+    int n = get_degree();    // получение степени полинома от пользователя
 
     double x, y;
     if (mode != INVERSE)
-        x = get_argument();    // получение значения аргумента
+        x = get_argument();    // получение значения аргумента от пользователя
     else
-        x = 0.0;
+        x = 0.0;    // обратная интерполяция - ищем корень, поэтому аргумент = 0.0
 
     size_t size = 0;
-    // как назвать тип?
+    
     record_t *data = export_to_array(file, &size);
     fclose(file);
+
+    if (!data)
+        return EXIT_FAILURE; // выходим, если не удалось выделить память
 
     sort(data, size, mode);
     size_t start_index = get_config(data, size, mode, x, n);
@@ -38,7 +41,7 @@ int main(void)
             break;
 
         case INVERSE:
-            y = interp_inverse(data, x, start_index, n);
+            y = interp_inverse(data, size, x, start_index, n);
             break;
         
         default:
