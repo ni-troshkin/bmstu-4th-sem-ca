@@ -130,6 +130,7 @@ record_t *data, size_t start_index)
         y += prod;
     }
 
+    free(factors);
     return y;
 }
 
@@ -156,6 +157,7 @@ double interp_newton(record_t *data, double x, size_t start_index, int n)
         factors[i] = extra_diffs[0];
     }
 
+    free(extra_diffs);
     return get_polynom_value(factors, n, x, data, start_index);
 }
 
@@ -185,6 +187,7 @@ double interp_hermite(record_t *data, double x, size_t start_index, int n)
         factors[i] = extra_diffs[0];
     }
 
+    free(extra_diffs);
     return get_polynom_value(factors, n, x, data, start_index);
 }
 
