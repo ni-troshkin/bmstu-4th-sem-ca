@@ -74,7 +74,7 @@ static void forward_stroke(record_t *data, double *xee, double *etha, size_t siz
         double D_i = data[i].x - data[i - 1].x;
         double B_i = 2 * (data[i - 2].x - data[i].x);
         double A_i = data[i - 1].x - data[i - 2].x;
-        double F_i = 3 * ((data[i].y - data[i - 1].y) / D_i - \
+        double F_i = -3 * ((data[i].y - data[i - 1].y) / D_i - \
                         (data[i - 1].y - data[i - 2].y) / A_i);
 
         xee[i + 1] = D_i / (B_i - A_i * xee[i]);
@@ -95,7 +95,7 @@ double *etha, size_t size)
         splines[i].a = data[i - 1].y;
         double h = data[i].x - data[i - 1].x;
         splines[i].b = (data[i].y - data[i - 1].y) / h - \
-                        1 / 3.0 * h * (2 * splines[i].c + splines[i + 1].c);
+                        h / 3.0 * (2 * splines[i].c + splines[i + 1].c);
         splines[i].d = (splines[i + 1].c - splines[i].c) / h / 3.0;
     }
 }
