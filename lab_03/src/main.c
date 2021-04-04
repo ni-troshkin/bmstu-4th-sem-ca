@@ -12,21 +12,27 @@ int main(void)
     double x1, x2, y1, y2;
     get_arguments(&x1, &x2);    // получение значений аргументов от пользователя
 
-    size_t size = 0;
+    size_t size = 0;   // size - количество узлов
+    // считывание табличной функции в массив
     record_t *data = export_to_array(file, &size);
     fclose(file);
 
     if (!data)
         return EXIT_FAILURE; // выходим, если не удалось выделить память
 
-    // сортировка матрицы записей для удобства нахождения конфигурации
+    // сортировка массива записей для удобства
     sort(data, size);
 
+    // вычисление коэффициентов кубических сплайнов
     spline_t *splines = calc_splines(data, size);
 
+    if (!splines)
+        return EXIT_FAILURE; // выход, если ошибка выделения памяти
+
+    // нахождение значения функции как значения соответствующего сплайна
     y1 = get_spline_value(splines, data, size, x1);
     y2 = get_spline_value(splines, data, size, x2);
-    //z = mult_interp(data, rows, cols, x, y, nx, ny);    // сама интерполяция
+    
     printf("%.3lf %.3lf", y1, y2);
     free(splines);
     free(data);

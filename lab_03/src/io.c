@@ -10,15 +10,13 @@ static void clear_stdinput(void)
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void show_info(void)    // TODO: переписать
+void show_info(void)    // Информация о программе
 {
-    printf("The program allows to find function value for entered argument "
-        "or the root of the function using inverse interpolation\n");
-    printf("The function is defined with a table, including x, y and y\'\n");
-    printf("Linear polynomial interpolation is performed with\n");
-    printf("Newton polynom, Hermite polynom and inverse interpolation\n");
-    printf("The degree of the polynom MUST be less or equal "
-        "to number of records in the data file.\n\n");
+    printf("The program allows to find function value for entered arguments "
+        "using spline interpolation\n");
+    printf("The function is defined with a table, including x and y\'\n");
+    printf("The argument value MUST be greater or equal to minimum argument\n"
+        "in the table and less or equal to maximum argument in the table.\n\n");
     printf("(c) Nickolay Troshkin, IU7-46B, BMSTU\n\n");
 }
 

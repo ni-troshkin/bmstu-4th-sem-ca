@@ -27,6 +27,5 @@ record_t *export_to_array(FILE *file, size_t *size);
 void sort(record_t *data, size_t size);
 spline_t *calc_splines(record_t *data, size_t size);
 double get_spline_value(spline_t *splines, record_t *data, size_t size, double x);
-// double mult_interp(record_t *data, size_t rows, size_t cols, double x, double y, int nx, int ny);
 
 #endif  // __INTERP_H_
