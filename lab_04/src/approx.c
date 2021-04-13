@@ -87,13 +87,6 @@ static void solve_slae(double **A, double *Y, int n)
             A[i][j] /= mult;
         Y[i] /= mult;
     }
-//     inv_matrix(A);
-//     for (size_t i = 0; i < n; i++)
-//     {
-//         X[i] = 0;
-//         for (size_t j = 0; j < n; j++)
-//             X[i] += A[i][j] * Y[j];
-//     }
 }
 
 double *get_polynom_coeffs(record_t *data, size_t size, int n)
@@ -101,13 +94,11 @@ double *get_polynom_coeffs(record_t *data, size_t size, int n)
     n++;
     double **slae_A = malloc(n * sizeof(double *) + n * n * sizeof(double));
     double *slae_Y = malloc(n * sizeof(double));
-    // double *slae_X = malloc(n * sizeof(double));
 
     if (!slae_A || !slae_Y)
     {
         free(slae_A);
         free(slae_Y);
-        // free(slae_X);
         return NULL;
     }
     
@@ -143,7 +134,6 @@ double *get_polynom_coeffs(record_t *data, size_t size, int n)
     solve_slae(slae_A, slae_Y, n);
 
     free(slae_A);
-    //free(slae_Y);
     return slae_Y;
 }
 
@@ -170,15 +160,17 @@ void plot(double *coeffs, record_t *data, int n, size_t size)
         "set zrange [ * : * ] noreverse writeback\n"
         "set cbrange [ * : * ] noreverse writeback\n"
         "set rrange [ * : * ] noreverse writeback\n"
-        "plot [0:%zu] \'points\', ", size);
+        "plot [-1:%zu] \'points\', ", size);
 
     for (int i = 0; i <= n; i++)
     {
         fprintf(script, "%.2lf", coeffs[n - i]);
-        for (int j = i; j < n; j++)
-            fprintf(script, " * x");
         if (i != n)
+        {
+            fprintf(script, " * x");
+            fprintf(script, " ** %d", n - i);
             fprintf(script, " + ");
+        }
         else
             fprintf(script, "\n");
     }
